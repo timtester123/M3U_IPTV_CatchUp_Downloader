@@ -41,7 +41,6 @@ Partial Class Form1
         Me.Button_cancel = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
-        Me.VisitWatchHDtoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DonateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckForUpdateOnGitHubToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1.SuspendLayout()
@@ -231,18 +230,12 @@ Partial Class Form1
         '
         'MenuStrip
         '
-        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.VisitWatchHDtoToolStripMenuItem, Me.DonateToolStripMenuItem, Me.CheckForUpdateOnGitHubToolStripMenuItem})
+        Me.MenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DonateToolStripMenuItem, Me.CheckForUpdateOnGitHubToolStripMenuItem})
         Me.MenuStrip.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip.Name = "MenuStrip"
         Me.MenuStrip.Size = New System.Drawing.Size(795, 24)
         Me.MenuStrip.TabIndex = 12
         Me.MenuStrip.Text = "MenuStrip"
-        '
-        'VisitWatchHDtoToolStripMenuItem
-        '
-        Me.VisitWatchHDtoToolStripMenuItem.Name = "VisitWatchHDtoToolStripMenuItem"
-        Me.VisitWatchHDtoToolStripMenuItem.Size = New System.Drawing.Size(109, 20)
-        Me.VisitWatchHDtoToolStripMenuItem.Text = "Visit WatchHD.to"
         '
         'DonateToolStripMenuItem
         '
@@ -270,7 +263,7 @@ Partial Class Form1
         Me.MaximumSize = New System.Drawing.Size(811, 834)
         Me.MinimumSize = New System.Drawing.Size(811, 834)
         Me.Name = "Form1"
-        Me.Text = "M3U IPTV CatchUp Downloader ©TimTester (made for WatchHD.to)"
+        Me.Text = "M3U IPTV CatchUp Downloader ©TimTester"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
@@ -299,7 +292,6 @@ Partial Class Form1
     Friend WithEvents Button_cancel As Button
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents MenuStrip As MenuStrip
-    Friend WithEvents VisitWatchHDtoToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents DonateToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CheckForUpdateOnGitHubToolStripMenuItem As ToolStripMenuItem
 End Class

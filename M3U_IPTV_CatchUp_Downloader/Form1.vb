@@ -5,8 +5,8 @@ Imports System.Net
 Public Class Form1
 
 
-    Public local_M3U As String = Application.StartupPath() & "\Downloads\WatchHD.m3u"
-    Public local_EPG As String = Application.StartupPath() & "\Downloads\WatchHD_EPG.XML"
+    Public local_M3U As String = Application.StartupPath() & "\Downloads\M3U.m3u"
+    Public local_EPG As String = Application.StartupPath() & "\Downloads\EPG.XML"
     Public EPG_XML As String
 
 
@@ -148,8 +148,6 @@ Public Class Form1
         'Download
         If (ListBox.SelectedIndices.Count > 0) Then
             Button_cancel.Visible = True
-            'http://iptv.watchhd.cc:5050/usr/pw/1
-            'http://iptv.watchhd.cc:5050/streaming/timeshift.php?username=usw&password=pw&stream=4678&start=2020-09-13:19-58&duration=5
 
             Dim title As String = ""
             Dim start_time_str As String = ""
@@ -427,10 +425,6 @@ Public Class Form1
 
         check_for_update(False)
 
-    End Sub
-
-    Private Sub VisitWatchHDtoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles VisitWatchHDtoToolStripMenuItem.Click
-        Process.Start("https://watchhd.to/signup?friend=8487")
     End Sub
 
 
