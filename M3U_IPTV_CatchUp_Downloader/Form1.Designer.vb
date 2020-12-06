@@ -300,9 +300,9 @@ Partial Class Form1
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(15, 122)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(57, 20)
+        Me.Label4.Size = New System.Drawing.Size(123, 20)
         Me.Label4.TabIndex = 14
-        Me.Label4.Text = "Offset:"
+        Me.Label4.Text = "Offset (minutes)"
         '
         'TextBox_offset_b
         '
