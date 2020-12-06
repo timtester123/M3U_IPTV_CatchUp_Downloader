@@ -89,6 +89,30 @@ Namespace My
                 Me("DownloadPath") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property offset_b() As String
+            Get
+                Return CType(Me("offset_b"),String)
+            End Get
+            Set
+                Me("offset_b") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property offset_a() As String
+            Get
+                Return CType(Me("offset_a"),String)
+            End Get
+            Set
+                Me("offset_a") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

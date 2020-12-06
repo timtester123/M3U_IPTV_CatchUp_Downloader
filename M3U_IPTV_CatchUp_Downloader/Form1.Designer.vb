@@ -32,6 +32,9 @@ Partial Class Form1
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Button_reload = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button_choose_Download_path = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox_Download_Path = New System.Windows.Forms.TextBox()
         Me.Button_Download = New System.Windows.Forms.Button()
         Me.TextBox_Filter = New System.Windows.Forms.TextBox()
         Me.Label_seeach = New System.Windows.Forms.Label()
@@ -43,10 +46,12 @@ Partial Class Form1
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
         Me.DonateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckForUpdateOnGitHubToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.TextBox_Download_Path = New System.Windows.Forms.TextBox()
-        Me.Button_choose_Download_path = New System.Windows.Forms.Button()
         Me.FolderBrowserDialog_DownloadPath = New System.Windows.Forms.FolderBrowserDialog()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.TextBox_offset_b = New System.Windows.Forms.TextBox()
+        Me.TextBox_offset_a = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.MenuStrip.SuspendLayout()
@@ -71,7 +76,7 @@ Partial Class Form1
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(9, 119)
+        Me.ProgressBar1.Location = New System.Drawing.Point(10, 151)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(776, 23)
         Me.ProgressBar1.TabIndex = 3
@@ -83,7 +88,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label_status.AutoSize = True
         Me.Label_status.BackColor = System.Drawing.Color.Transparent
-        Me.Label_status.Location = New System.Drawing.Point(16, 145)
+        Me.Label_status.Location = New System.Drawing.Point(17, 177)
         Me.Label_status.Name = "Label_status"
         Me.Label_status.Size = New System.Drawing.Size(24, 13)
         Me.Label_status.TabIndex = 4
@@ -130,6 +135,11 @@ Partial Class Form1
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Label6)
+        Me.GroupBox1.Controls.Add(Me.Label5)
+        Me.GroupBox1.Controls.Add(Me.TextBox_offset_a)
+        Me.GroupBox1.Controls.Add(Me.Label4)
+        Me.GroupBox1.Controls.Add(Me.TextBox_offset_b)
         Me.GroupBox1.Controls.Add(Me.Button_choose_Download_path)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TextBox_Download_Path)
@@ -143,9 +153,37 @@ Partial Class Form1
         Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox1.Location = New System.Drawing.Point(0, 24)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(795, 166)
+        Me.GroupBox1.Size = New System.Drawing.Size(795, 196)
         Me.GroupBox1.TabIndex = 3
         Me.GroupBox1.TabStop = False
+        '
+        'Button_choose_Download_path
+        '
+        Me.Button_choose_Download_path.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
+        Me.Button_choose_Download_path.Location = New System.Drawing.Point(693, 87)
+        Me.Button_choose_Download_path.Name = "Button_choose_Download_path"
+        Me.Button_choose_Download_path.Size = New System.Drawing.Size(90, 26)
+        Me.Button_choose_Download_path.TabIndex = 12
+        Me.Button_choose_Download_path.Text = "choose"
+        Me.Button_choose_Download_path.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(15, 90)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(121, 20)
+        Me.Label2.TabIndex = 11
+        Me.Label2.Text = "Download Path:"
+        '
+        'TextBox_Download_Path
+        '
+        Me.TextBox_Download_Path.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
+        Me.TextBox_Download_Path.Location = New System.Drawing.Point(142, 87)
+        Me.TextBox_Download_Path.Name = "TextBox_Download_Path"
+        Me.TextBox_Download_Path.Size = New System.Drawing.Size(545, 26)
+        Me.TextBox_Download_Path.TabIndex = 10
         '
         'Button_Download
         '
@@ -229,7 +267,7 @@ Partial Class Form1
         Me.GroupBox2.Controls.Add(Me.TextBox_Filter)
         Me.GroupBox2.Controls.Add(Me.Button_Download)
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox2.Location = New System.Drawing.Point(0, 190)
+        Me.GroupBox2.Location = New System.Drawing.Point(0, 220)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(795, 631)
         Me.GroupBox2.TabIndex = 4
@@ -256,47 +294,65 @@ Partial Class Form1
         Me.CheckForUpdateOnGitHubToolStripMenuItem.Size = New System.Drawing.Size(169, 20)
         Me.CheckForUpdateOnGitHubToolStripMenuItem.Text = "Check for Update on GitHub"
         '
-        'Label2
+        'Label4
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(15, 90)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(121, 20)
-        Me.Label2.TabIndex = 11
-        Me.Label2.Text = "Download Path:"
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(15, 122)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(57, 20)
+        Me.Label4.TabIndex = 14
+        Me.Label4.Text = "Offset:"
         '
-        'TextBox_Download_Path
+        'TextBox_offset_b
         '
-        Me.TextBox_Download_Path.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.TextBox_Download_Path.Location = New System.Drawing.Point(142, 87)
-        Me.TextBox_Download_Path.Name = "TextBox_Download_Path"
-        Me.TextBox_Download_Path.Size = New System.Drawing.Size(545, 26)
-        Me.TextBox_Download_Path.TabIndex = 10
+        Me.TextBox_offset_b.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
+        Me.TextBox_offset_b.Location = New System.Drawing.Point(203, 119)
+        Me.TextBox_offset_b.Name = "TextBox_offset_b"
+        Me.TextBox_offset_b.Size = New System.Drawing.Size(37, 26)
+        Me.TextBox_offset_b.TabIndex = 13
         '
-        'Button_choose_Download_path
+        'TextBox_offset_a
         '
-        Me.Button_choose_Download_path.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.Button_choose_Download_path.Location = New System.Drawing.Point(693, 87)
-        Me.Button_choose_Download_path.Name = "Button_choose_Download_path"
-        Me.Button_choose_Download_path.Size = New System.Drawing.Size(90, 26)
-        Me.Button_choose_Download_path.TabIndex = 12
-        Me.Button_choose_Download_path.Text = "choose"
-        Me.Button_choose_Download_path.UseVisualStyleBackColor = True
+        Me.TextBox_offset_a.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
+        Me.TextBox_offset_a.Location = New System.Drawing.Point(298, 119)
+        Me.TextBox_offset_a.Name = "TextBox_offset_a"
+        Me.TextBox_offset_a.Size = New System.Drawing.Size(37, 26)
+        Me.TextBox_offset_a.TabIndex = 15
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(138, 122)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(59, 20)
+        Me.Label5.TabIndex = 16
+        Me.Label5.Text = "before:"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(246, 122)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(46, 20)
+        Me.Label6.TabIndex = 17
+        Me.Label6.Text = "after:"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(795, 821)
+        Me.ClientSize = New System.Drawing.Size(795, 851)
         Me.Controls.Add(Me.ListBox_Backup)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.MenuStrip)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximumSize = New System.Drawing.Size(811, 860)
-        Me.MinimumSize = New System.Drawing.Size(811, 860)
+        Me.MaximumSize = New System.Drawing.Size(811, 890)
+        Me.MinimumSize = New System.Drawing.Size(811, 890)
         Me.Name = "Form1"
         Me.Text = "M3U IPTV CatchUp Downloader ©TimTester"
         Me.GroupBox1.ResumeLayout(False)
@@ -333,4 +389,9 @@ Partial Class Form1
     Friend WithEvents TextBox_Download_Path As TextBox
     Friend WithEvents Button_choose_Download_path As Button
     Friend WithEvents FolderBrowserDialog_DownloadPath As FolderBrowserDialog
+    Friend WithEvents Label4 As Label
+    Friend WithEvents TextBox_offset_b As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents TextBox_offset_a As TextBox
 End Class

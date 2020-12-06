@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
-
+Imports System.Text.RegularExpressions
 
 Public Class Form1
 
@@ -38,12 +38,16 @@ Public Class Form1
         My.Settings.EPG_URL = TextBox_EPG_URL.Text
         My.Settings.M3U_URL = TextBox_M3U_URL.Text
         My.Settings.DownloadPath = TextBox_Download_Path.Text
+        My.Settings.offset_a = TextBox_offset_a.Text
+        My.Settings.offset_b = TextBox_offset_b.Text
         My.Settings.Save()
     End Sub
     Private Sub load_settings()
         Dim M3U_URL As String = My.Settings.M3U_URL
         Dim EPG_URL As String = My.Settings.EPG_URL
         Dim DownloadPath As String = My.Settings.DownloadPath
+        Dim offset_a As String = My.Settings.offset_a
+        Dim offset_b As String = My.Settings.offset_b
         TextBox_EPG_URL.Text = EPG_URL
         TextBox_M3U_URL.Text = M3U_URL
 
@@ -52,6 +56,18 @@ Public Class Form1
         Else
             TextBox_Download_Path.Text = DownloadPath
         End If
+
+        If offset_a = "" Then
+            TextBox_offset_a.Text = 2
+        Else
+            TextBox_offset_a.Text = offset_a
+        End If
+        If offset_b = "" Then
+            TextBox_offset_b.Text = 2
+        Else
+            TextBox_offset_b.Text = offset_b
+        End If
+
 
 
 
@@ -304,13 +320,16 @@ Public Class Form1
         Dim base_URL As String = ""
         get_User_PW_Channel(channel_Nr, base_URL, USER, PW, URL)
 
+        Dim offset_a As Integer = TextBox_offset_a.Text
+        Dim offset_b As Integer = TextBox_offset_b.Text
+
         'EPG Data
         Dim start_time As DateTime = startTime(ListBox.SelectedIndex)
-        start_time = start_time.AddMinutes(-2) ' start x minutes before
+        start_time = start_time.AddMinutes(offset_b * -1) ' start x minutes before
         Dim stop_time As DateTime = stopTime(ListBox.SelectedIndex)
         title = Titles(ListBox.SelectedIndex)
         Dim elapsedTime As TimeSpan = DateTime.Parse(stop_time).Subtract(start_time)
-        Dim elapsedTime_min As Integer = elapsedTime.TotalMinutes + 2 '  x minutes after
+        Dim elapsedTime_min As Integer = elapsedTime.TotalMinutes + offset_b '  x minutes after
         start_time_str = start_time.ToString("yyyy-MM-dd:HH-mm")
         'CatchUp URL
         Dim timeshift_URL As String = base_URL & "/streaming/timeshift.php?username=" & USER & "&password=" & PW & "&stream=" & channel_Nr & "&start=" & start_time_str & "&duration=" & elapsedTime_min
@@ -445,5 +464,15 @@ Public Class Form1
         FolderBrowserDialog_DownloadPath.ShowDialog()
         Dim DownloadPath As String = FolderBrowserDialog_DownloadPath.SelectedPath
         TextBox_Download_Path.Text = DownloadPath
+    End Sub
+
+    Private Sub TextBox_offset_b_TextChanged(sender As Object, e As EventArgs) Handles TextBox_offset_b.TextChanged
+        Dim digitsOnly As Regex = New Regex("[^\d]")
+        TextBox_offset_b.Text = digitsOnly.Replace(TextBox_offset_b.Text, "")
+    End Sub
+
+    Private Sub TextBox_offset_a_TextChanged(sender As Object, e As EventArgs) Handles TextBox_offset_a.TextChanged
+        Dim digitsOnly As Regex = New Regex("[^\d]")
+        TextBox_offset_a.Text = digitsOnly.Replace(TextBox_offset_a.Text, "")
     End Sub
 End Class
