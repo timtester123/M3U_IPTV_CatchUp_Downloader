@@ -5,8 +5,8 @@ Imports System.Net
 Public Class Form1
 
 
-    Public local_M3U As String = Application.StartupPath() & "\Downloads\M3U.m3u"
-    Public local_EPG As String = Application.StartupPath() & "\Downloads\EPG.XML"
+    Public local_M3U As String = Path.GetTempPath() & "\M3U.m3u"
+    Public local_EPG As String = Path.GetTempPath() & "\EPG.XML"
     Public EPG_XML As String
 
 
@@ -37,13 +37,23 @@ Public Class Form1
     Private Sub save_settings()
         My.Settings.EPG_URL = TextBox_EPG_URL.Text
         My.Settings.M3U_URL = TextBox_M3U_URL.Text
+        My.Settings.DownloadPath = TextBox_Download_Path.Text
         My.Settings.Save()
     End Sub
     Private Sub load_settings()
         Dim M3U_URL As String = My.Settings.M3U_URL
         Dim EPG_URL As String = My.Settings.EPG_URL
+        Dim DownloadPath As String = My.Settings.DownloadPath
         TextBox_EPG_URL.Text = EPG_URL
         TextBox_M3U_URL.Text = M3U_URL
+
+        If DownloadPath = "" Then
+            TextBox_Download_Path.Text = Application.StartupPath()
+        Else
+            TextBox_Download_Path.Text = DownloadPath
+        End If
+
+
 
         M3U_URL_Download(TextBox_M3U_URL.Text)
 
@@ -144,6 +154,10 @@ Public Class Form1
 
     Private Sub Button_Download_Click(sender As Object, e As EventArgs) Handles Button_Download.Click
 
+        If My.Computer.FileSystem.DirectoryExists(TextBox_Download_Path.Text) = False Then
+            MsgBox("Please check the download path: " & TextBox_Download_Path.Text)
+            Exit Sub
+        End If
 
         'Download
         If (ListBox.SelectedIndices.Count > 0) Then
@@ -156,7 +170,7 @@ Public Class Form1
             Dim timeshift_URL As String = get_timeshift_URL(title, start_time_str, name)
 
             'Create Folder and download
-            Dim folder As String = Application.StartupPath() & "\Downloads\" & name
+            Dim folder As String = TextBox_Download_Path.Text & "\" & name
             My.Computer.FileSystem.CreateDirectory(folder)
             Dim DownloadFile As String = folder + "\" & RemoveIllegalFileNameChars(name & " - " & title + " - " & start_time_str, "") & ".mkv"
 
@@ -427,7 +441,9 @@ Public Class Form1
 
     End Sub
 
-
-
-
+    Private Sub Button_choose_Download_path_Click(sender As Object, e As EventArgs) Handles Button_choose_Download_path.Click
+        FolderBrowserDialog_DownloadPath.ShowDialog()
+        Dim DownloadPath As String = FolderBrowserDialog_DownloadPath.SelectedPath
+        TextBox_Download_Path.Text = DownloadPath
+    End Sub
 End Class

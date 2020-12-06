@@ -43,6 +43,10 @@ Partial Class Form1
         Me.MenuStrip = New System.Windows.Forms.MenuStrip()
         Me.DonateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CheckForUpdateOnGitHubToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.TextBox_Download_Path = New System.Windows.Forms.TextBox()
+        Me.Button_choose_Download_path = New System.Windows.Forms.Button()
+        Me.FolderBrowserDialog_DownloadPath = New System.Windows.Forms.FolderBrowserDialog()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.MenuStrip.SuspendLayout()
@@ -60,14 +64,14 @@ Partial Class Form1
         'TextBox_EPG_URL
         '
         Me.TextBox_EPG_URL.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.TextBox_EPG_URL.Location = New System.Drawing.Point(108, 55)
+        Me.TextBox_EPG_URL.Location = New System.Drawing.Point(142, 55)
         Me.TextBox_EPG_URL.Name = "TextBox_EPG_URL"
-        Me.TextBox_EPG_URL.Size = New System.Drawing.Size(579, 26)
+        Me.TextBox_EPG_URL.Size = New System.Drawing.Size(545, 26)
         Me.TextBox_EPG_URL.TabIndex = 2
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(10, 87)
+        Me.ProgressBar1.Location = New System.Drawing.Point(9, 119)
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(776, 23)
         Me.ProgressBar1.TabIndex = 3
@@ -79,7 +83,7 @@ Partial Class Form1
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label_status.AutoSize = True
         Me.Label_status.BackColor = System.Drawing.Color.Transparent
-        Me.Label_status.Location = New System.Drawing.Point(17, 113)
+        Me.Label_status.Location = New System.Drawing.Point(16, 145)
         Me.Label_status.Name = "Label_status"
         Me.Label_status.Size = New System.Drawing.Size(24, 13)
         Me.Label_status.TabIndex = 4
@@ -99,9 +103,9 @@ Partial Class Form1
         'TextBox_M3U_URL
         '
         Me.TextBox_M3U_URL.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.TextBox_M3U_URL.Location = New System.Drawing.Point(108, 19)
+        Me.TextBox_M3U_URL.Location = New System.Drawing.Point(142, 19)
         Me.TextBox_M3U_URL.Name = "TextBox_M3U_URL"
-        Me.TextBox_M3U_URL.Size = New System.Drawing.Size(579, 26)
+        Me.TextBox_M3U_URL.Size = New System.Drawing.Size(545, 26)
         Me.TextBox_M3U_URL.TabIndex = 1
         '
         'Label3
@@ -126,6 +130,9 @@ Partial Class Form1
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Button_choose_Download_path)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.TextBox_Download_Path)
         Me.GroupBox1.Controls.Add(Me.Button_reload)
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.TextBox_M3U_URL)
@@ -136,14 +143,14 @@ Partial Class Form1
         Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox1.Location = New System.Drawing.Point(0, 24)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(795, 130)
+        Me.GroupBox1.Size = New System.Drawing.Size(795, 166)
         Me.GroupBox1.TabIndex = 3
         Me.GroupBox1.TabStop = False
         '
         'Button_Download
         '
         Me.Button_Download.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.Button_Download.Location = New System.Drawing.Point(3, 51)
+        Me.Button_Download.Location = New System.Drawing.Point(3, 50)
         Me.Button_Download.Name = "Button_Download"
         Me.Button_Download.Size = New System.Drawing.Size(447, 30)
         Me.Button_Download.TabIndex = 5
@@ -154,7 +161,7 @@ Partial Class Form1
         'TextBox_Filter
         '
         Me.TextBox_Filter.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.TextBox_Filter.Location = New System.Drawing.Point(79, 19)
+        Me.TextBox_Filter.Location = New System.Drawing.Point(79, 18)
         Me.TextBox_Filter.Name = "TextBox_Filter"
         Me.TextBox_Filter.Size = New System.Drawing.Size(707, 26)
         Me.TextBox_Filter.TabIndex = 4
@@ -163,7 +170,7 @@ Partial Class Form1
         '
         Me.Label_seeach.AutoSize = True
         Me.Label_seeach.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label_seeach.Location = New System.Drawing.Point(9, 22)
+        Me.Label_seeach.Location = New System.Drawing.Point(9, 21)
         Me.Label_seeach.Name = "Label_seeach"
         Me.Label_seeach.Size = New System.Drawing.Size(64, 20)
         Me.Label_seeach.TabIndex = 3
@@ -172,7 +179,7 @@ Partial Class Form1
         'Button_Play
         '
         Me.Button_Play.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.Button_Play.Location = New System.Drawing.Point(566, 51)
+        Me.Button_Play.Location = New System.Drawing.Point(566, 50)
         Me.Button_Play.Name = "Button_Play"
         Me.Button_Play.Size = New System.Drawing.Size(219, 30)
         Me.Button_Play.TabIndex = 7
@@ -185,7 +192,7 @@ Partial Class Form1
         Me.ListBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ListBox.FormattingEnabled = True
         Me.ListBox.ItemHeight = 20
-        Me.ListBox.Location = New System.Drawing.Point(3, 122)
+        Me.ListBox.Location = New System.Drawing.Point(3, 123)
         Me.ListBox.Name = "ListBox"
         Me.ListBox.Size = New System.Drawing.Size(786, 504)
         Me.ListBox.TabIndex = 10
@@ -193,7 +200,7 @@ Partial Class Form1
         'Button_show_TV
         '
         Me.Button_show_TV.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.Button_show_TV.Location = New System.Drawing.Point(3, 87)
+        Me.Button_show_TV.Location = New System.Drawing.Point(3, 86)
         Me.Button_show_TV.Name = "Button_show_TV"
         Me.Button_show_TV.Size = New System.Drawing.Size(782, 30)
         Me.Button_show_TV.TabIndex = 8
@@ -204,7 +211,7 @@ Partial Class Form1
         'Button_cancel
         '
         Me.Button_cancel.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
-        Me.Button_cancel.Location = New System.Drawing.Point(456, 51)
+        Me.Button_cancel.Location = New System.Drawing.Point(456, 50)
         Me.Button_cancel.Name = "Button_cancel"
         Me.Button_cancel.Size = New System.Drawing.Size(104, 30)
         Me.Button_cancel.TabIndex = 6
@@ -222,9 +229,9 @@ Partial Class Form1
         Me.GroupBox2.Controls.Add(Me.TextBox_Filter)
         Me.GroupBox2.Controls.Add(Me.Button_Download)
         Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox2.Location = New System.Drawing.Point(0, 154)
+        Me.GroupBox2.Location = New System.Drawing.Point(0, 190)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(795, 641)
+        Me.GroupBox2.Size = New System.Drawing.Size(795, 631)
         Me.GroupBox2.TabIndex = 4
         Me.GroupBox2.TabStop = False
         '
@@ -249,19 +256,47 @@ Partial Class Form1
         Me.CheckForUpdateOnGitHubToolStripMenuItem.Size = New System.Drawing.Size(169, 20)
         Me.CheckForUpdateOnGitHubToolStripMenuItem.Text = "Check for Update on GitHub"
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(15, 90)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(121, 20)
+        Me.Label2.TabIndex = 11
+        Me.Label2.Text = "Download Path:"
+        '
+        'TextBox_Download_Path
+        '
+        Me.TextBox_Download_Path.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
+        Me.TextBox_Download_Path.Location = New System.Drawing.Point(142, 87)
+        Me.TextBox_Download_Path.Name = "TextBox_Download_Path"
+        Me.TextBox_Download_Path.Size = New System.Drawing.Size(545, 26)
+        Me.TextBox_Download_Path.TabIndex = 10
+        '
+        'Button_choose_Download_path
+        '
+        Me.Button_choose_Download_path.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.25!)
+        Me.Button_choose_Download_path.Location = New System.Drawing.Point(693, 87)
+        Me.Button_choose_Download_path.Name = "Button_choose_Download_path"
+        Me.Button_choose_Download_path.Size = New System.Drawing.Size(90, 26)
+        Me.Button_choose_Download_path.TabIndex = 12
+        Me.Button_choose_Download_path.Text = "choose"
+        Me.Button_choose_Download_path.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(795, 795)
+        Me.ClientSize = New System.Drawing.Size(795, 821)
         Me.Controls.Add(Me.ListBox_Backup)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.MenuStrip)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximumSize = New System.Drawing.Size(811, 834)
-        Me.MinimumSize = New System.Drawing.Size(811, 834)
+        Me.MaximumSize = New System.Drawing.Size(811, 860)
+        Me.MinimumSize = New System.Drawing.Size(811, 860)
         Me.Name = "Form1"
         Me.Text = "M3U IPTV CatchUp Downloader ©TimTester"
         Me.GroupBox1.ResumeLayout(False)
@@ -294,4 +329,8 @@ Partial Class Form1
     Friend WithEvents MenuStrip As MenuStrip
     Friend WithEvents DonateToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CheckForUpdateOnGitHubToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Label2 As Label
+    Friend WithEvents TextBox_Download_Path As TextBox
+    Friend WithEvents Button_choose_Download_path As Button
+    Friend WithEvents FolderBrowserDialog_DownloadPath As FolderBrowserDialog
 End Class
