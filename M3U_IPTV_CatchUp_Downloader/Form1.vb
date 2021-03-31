@@ -206,6 +206,7 @@ Public Class Form1
 
             'if not active else only append
             If downloader.IsBusy = False Then
+                downloader.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)")
                 downloader.DownloadFileAsync(New Uri(Downloads_URLS(0)), Downloads_DownloadFiles(0), Stopwatch.StartNew)
                 akt_file = Path.GetFileName(Downloads_DownloadFiles(0))
             End If

@@ -17,6 +17,7 @@ Module download
                 '    Exit Sub
                 'End If
                 downloader_M3U = New WebClient
+                downloader_M3U.Headers.Add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.2; .NET CLR 1.0.3705;)")
                 My.Computer.FileSystem.CreateDirectory(Application.StartupPath() & "\Downloads")
                 downloader_M3U.DownloadFileAsync(New Uri(M3U_URL), Form1.local_M3U, Stopwatch.StartNew)
             End If
