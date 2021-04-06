@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Net
 Imports System.Text.RegularExpressions
+Imports M3U_IPTV_CatchUp_Downloader.EPG_Class
 
 Public Class Form1
 
@@ -8,8 +9,9 @@ Public Class Form1
     Public local_M3U As String = Path.GetTempPath() & "\M3U.m3u"
     Public local_EPG As String = Path.GetTempPath() & "\EPG.XML"
     Public EPG_XML As String
+    Public TimeZoneOffset As TimeSpan
 
-
+    Dim EPG_Entries As New List(Of EPG)
     'Form functions
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -19,10 +21,22 @@ Public Class Form1
         'check for Update
         check_for_update(True)
 
+        TimeZoneOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow)
+
         'load settings
         load_settings()
 
         TextBox_Filter.Focus()
+
+
+
+        '    Dim theGalaxies As New List(Of EPG) From
+        '{
+        '    New EPG With {.Title = "Tadpole", .MegaLightYears = 400},
+        '    New EPG With {.Name = "Pinwheel", .MegaLightYears = 25},
+        '    New EPG With {.Name = "Milky Way", .MegaLightYears = 0},
+        '    New EPG With {.Name = "Andromeda", .MegaLightYears = 3}
+        '}
 
         '
 
@@ -300,20 +314,6 @@ Public Class Form1
         name = Namen(selected_channel_Nr)
         Dim URL As String = URLs(selected_channel_Nr)
 
-        ''channel Nr
-        'Dim channel_Nr As String = URL.Substring(URL.LastIndexOf("/") + 1, URL.Length - URL.LastIndexOf("/") - 1)
-        'channel_Nr = channel_Nr.ToLower.Replace(".m3u8", "").Replace(".m3u", "")
-        'URL = URL.Substring(0, URL.LastIndexOf("/"))
-        ''PW
-        'Dim PW As String = URL.Substring(URL.LastIndexOf("/") + 1, URL.Length - URL.LastIndexOf("/") - 1)
-        'URL = URL.Substring(0, URL.LastIndexOf("/"))
-        ''User
-        'Dim USER As String = URL.Substring(URL.LastIndexOf("/") + 1, URL.Length - URL.LastIndexOf("/") - 1)
-        'Dim base_URL As String = URL.Substring(0, URL.LastIndexOf("/"))
-        ''remove if something behind the port
-        'If base_URL.LastIndexOf("/") > base_URL.LastIndexOf(":") Then
-        '    base_URL = base_URL.Substring(0, base_URL.IndexOf("/", base_URL.LastIndexOf(":")))
-        'End If
 
         Dim channel_Nr As String = ""
         Dim USER As String = ""
@@ -325,10 +325,12 @@ Public Class Form1
         Dim offset_b As Integer = TextBox_offset_b.Text
 
         'EPG Data
-        Dim start_time As DateTime = startTime(ListBox.SelectedIndex)
+        Dim start_time As DateTime = EPG_Entries(ListBox.SelectedIndex).StartDateTime
+        start_time = start_time.Subtract(TimeZoneOffset)
         start_time = start_time.AddMinutes(offset_b * -1) ' start x minutes before
-        Dim stop_time As DateTime = stopTime(ListBox.SelectedIndex)
-        title = Titles(ListBox.SelectedIndex)
+        Dim stop_time As DateTime = EPG_Entries(ListBox.SelectedIndex).StopDateTime
+        stop_time = stop_time.Subtract(TimeZoneOffset)
+        title = EPG_Entries(ListBox.SelectedIndex).Title
         Dim elapsedTime As TimeSpan = DateTime.Parse(stop_time).Subtract(start_time)
         Dim elapsedTime_min As Integer = elapsedTime.TotalMinutes + offset_b '  x minutes after
         start_time_str = start_time.ToString("yyyy-MM-dd:HH-mm")
@@ -362,9 +364,6 @@ Public Class Form1
 
 
 
-    Dim Titles As New List(Of String)
-    Dim startTime As New List(Of DateTime)
-    Dim stopTime As New List(Of DateTime)
 
     Dim selected_channel_Nr As String
 
@@ -384,14 +383,8 @@ Public Class Form1
         End If
 
         'clear
-        For i = 0 To Titles.Count - 1
-            Titles.RemoveAt(0)
-        Next
-        For i = 0 To startTime.Count - 1
-            startTime.RemoveAt(0)
-        Next
-        For i = 0 To stopTime.Count - 1
-            stopTime.RemoveAt(0)
+        For i = 0 To EPG_Entries.Count - 1
+            EPG_Entries.RemoveAt(0)
         Next
 
         'selektierten Eintrag
@@ -415,20 +408,26 @@ Public Class Form1
                 If elem.Attribute("channel").Value.ToString.ToLower = ID.ToLower Then 'ID suchen
                     For Each elem_child As XElement In elem.Descendants
                         If elem_child.Name.ToString.ToLower = "title" Then
-                            Titles.Add(elem_child.Value.ToString) 'Title
-                            startTime.Add(convert_to_DateTime(elem.Attribute("start").Value.ToString)) 'Start Time
-                            stopTime.Add(convert_to_DateTime(elem.Attribute("stop").Value.ToString)) 'Stop Time
-                            Exit For
+                            Dim StopTimeCheck As DateTime = convert_to_DateTime(elem.Attribute("stop").Value.ToString)
+                            If StopTimeCheck < Now Then
+                                'Title, 'Start Time, 'Stop Time
+                                Dim EPG_Entry As New EPG With {.Title = elem_child.Value.ToString, .StartDateTime = convert_to_DateTime(elem.Attribute("start").Value.ToString), .StopDateTime = StopTimeCheck}
+                                EPG_Entries.Add(EPG_Entry)
+                                Exit For
+                            End If
+
                         End If
                     Next
                 End If
             End If
         Next
 
-        'insert in Listbox
+        'Sort
+        EPG_Entries.Sort(Function(a, b) a.StartDateTime.CompareTo(b.StartDateTime))
+
         ListBox.Items.Clear()
-        For i = 0 To Titles.Count - 1
-            ListBox.Items.Add(startTime(i).ToString & " | " & stopTime(i).ToString & " | " & Titles(i))
+        For i = 0 To EPG_Entries.Count - 1
+            ListBox.Items.Add(EPG_Entries(i).StartDateTime.ToString & " | " & EPG_Entries(i).StopDateTime.ToString & " | " & EPG_Entries(i).Title)
         Next
 
         'back button
@@ -477,3 +476,4 @@ Public Class Form1
         TextBox_offset_a.Text = digitsOnly.Replace(TextBox_offset_a.Text, "")
     End Sub
 End Class
+

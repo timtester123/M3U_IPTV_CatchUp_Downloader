@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="download_epg.vb" />
     <Compile Include="download_m3u.vb" />
+    <Compile Include="EPG_Class.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
