@@ -30,15 +30,7 @@ Public Class Form1
 
 
 
-        '    Dim theGalaxies As New List(Of EPG) From
-        '{
-        '    New EPG With {.Title = "Tadpole", .MegaLightYears = 400},
-        '    New EPG With {.Name = "Pinwheel", .MegaLightYears = 25},
-        '    New EPG With {.Name = "Milky Way", .MegaLightYears = 0},
-        '    New EPG With {.Name = "Andromeda", .MegaLightYears = 3}
-        '}
 
-        '
 
     End Sub
 
@@ -408,10 +400,10 @@ Public Class Form1
                 If elem.Attribute("channel").Value.ToString.ToLower = ID.ToLower Then 'ID suchen
                     For Each elem_child As XElement In elem.Descendants
                         If elem_child.Name.ToString.ToLower = "title" Then
-                            Dim StopTimeCheck As DateTime = convert_to_DateTime(elem.Attribute("stop").Value.ToString)
-                            If StopTimeCheck < Now Then
+                            Dim startTimeCheck As DateTime = convert_to_DateTime(elem.Attribute("start").Value.ToString)
+                            If startTimeCheck < Now Then
                                 'Title, 'Start Time, 'Stop Time
-                                Dim EPG_Entry As New EPG With {.Title = elem_child.Value.ToString, .StartDateTime = convert_to_DateTime(elem.Attribute("start").Value.ToString), .StopDateTime = StopTimeCheck}
+                                Dim EPG_Entry As New EPG With {.Title = elem_child.Value.ToString, .StartDateTime = convert_to_DateTime(elem.Attribute("start").Value.ToString), .StopDateTime = convert_to_DateTime(elem.Attribute("stop").Value.ToString)}
                                 EPG_Entries.Add(EPG_Entry)
                                 Exit For
                             End If
