@@ -400,14 +400,13 @@ Public Class Form1
                 If elem.Attribute("channel").Value.ToString.ToLower = ID.ToLower Then 'ID suchen
                     For Each elem_child As XElement In elem.Descendants
                         If elem_child.Name.ToString.ToLower = "title" Then
-                            Dim startTimeCheck As DateTime = convert_to_DateTime(elem.Attribute("start").Value.ToString)
-                            If startTimeCheck < Now Then
+                            Dim startTimeCheck As String = convert_to_DateTime(elem.Attribute("start").Value.ToString).ToString("yyyyMMddhhmmss")
+                            Dim CheckDate As String = Now.ToString("yyyyMMddhhmmss")
+                            If startTimeCheck <= CheckDate Then
                                 'Title, 'Start Time, 'Stop Time
                                 Dim EPG_Entry As New EPG With {.Title = elem_child.Value.ToString, .StartDateTime = convert_to_DateTime(elem.Attribute("start").Value.ToString), .StopDateTime = convert_to_DateTime(elem.Attribute("stop").Value.ToString)}
                                 EPG_Entries.Add(EPG_Entry)
-                                Exit For
                             End If
-
                         End If
                     Next
                 End If
