@@ -328,7 +328,7 @@ Partial Class Form1
         Me.ListBox.Location = New System.Drawing.Point(4, 189)
         Me.ListBox.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.ListBox.Name = "ListBox"
-        Me.ListBox.Size = New System.Drawing.Size(1177, 764)
+        Me.ListBox.Size = New System.Drawing.Size(1177, 524)
         Me.ListBox.TabIndex = 10
         '
         'Button_show_TV
