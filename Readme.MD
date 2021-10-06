@@ -4,5 +4,5 @@
 Download CatchUps from your IPTV M3U File.
 
 
-### Website / Contact / HowTo / Screenshots: [TimTester.in](https://timtester.in/programs/m3u-iptv-catchup-downloader/)
+### Website / Contact / HowTo / Screenshots: [iptv-oscam-shop.com](https://iptv-oscam-shop.com/index.php/m3u-iptv-catchup-downloader/)
 
