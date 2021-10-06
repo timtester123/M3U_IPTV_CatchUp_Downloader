@@ -34,7 +34,8 @@ Module functions
 
         DatTimStr = DatTimStr.Substring(0, 12)
         Dim oDate As DateTime = DateTime.ParseExact(DatTimStr, "yyyyMMddHHmm", System.Globalization.CultureInfo.InvariantCulture)
-        oDate = oDate.Add(Form1.TimeZoneOffset)
+        Dim TimeZoneOffset As TimeSpan = TimeSpan.FromHours(Form1.TextBox_TimeZone_offset.Text)
+        oDate = oDate.Add(TimeZoneOffset)
         Return (oDate)
     End Function
 

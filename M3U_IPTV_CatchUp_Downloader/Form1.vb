@@ -9,7 +9,6 @@ Public Class Form1
     Public local_M3U As String = Path.GetTempPath() & "\M3U.m3u"
     Public local_EPG As String = Path.GetTempPath() & "\EPG.XML"
     Public EPG_XML As String
-    Public TimeZoneOffset As TimeSpan
 
     Dim EPG_Entries As New List(Of EPG)
     'Form functions
@@ -21,7 +20,7 @@ Public Class Form1
         'check for Update
         check_for_update(True)
 
-        TimeZoneOffset = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow)
+
 
         'load settings
         load_settings()
@@ -46,6 +45,7 @@ Public Class Form1
         My.Settings.DownloadPath = TextBox_Download_Path.Text
         My.Settings.offset_a = TextBox_offset_a.Text
         My.Settings.offset_b = TextBox_offset_b.Text
+        My.Settings.TimeZone_offset = TextBox_TimeZone_offset.Text
         My.Settings.Save()
     End Sub
     Private Sub load_settings()
@@ -54,6 +54,7 @@ Public Class Form1
         Dim DownloadPath As String = My.Settings.DownloadPath
         Dim offset_a As String = My.Settings.offset_a
         Dim offset_b As String = My.Settings.offset_b
+        Dim TimeZone_offset As String = My.Settings.TimeZone_offset
         TextBox_EPG_URL.Text = EPG_URL
         TextBox_M3U_URL.Text = M3U_URL
 
@@ -73,8 +74,12 @@ Public Class Form1
         Else
             TextBox_offset_b.Text = offset_b
         End If
-
-
+        If TimeZone_offset = "" Then
+            Dim TimeZoneOffset As TimeSpan = TimeZoneInfo.Local.GetUtcOffset(DateTime.UtcNow)
+            TextBox_TimeZone_offset.Text = TimeZoneOffset.Hours
+        Else
+            TextBox_TimeZone_offset.Text = TimeZone_offset
+        End If
 
 
         M3U_URL_Download(TextBox_M3U_URL.Text)
@@ -107,8 +112,13 @@ Public Class Form1
 
 
         If (My.Computer.FileSystem.FileExists(file)) Then
-
-            Dim FileText As String = My.Computer.FileSystem.ReadAllText(file).Replace(vbCr, "")
+            Dim FileText As String = ""
+            Try
+                FileText = My.Computer.FileSystem.ReadAllText(file).Replace(vbCr, "")
+            Catch ex As Exception
+                MsgBox("Already running")
+                Exit Sub
+            End Try
             If FileText.ToLower.Contains("tvg-id=""") = False Then 'check if M3U Plus
                 MsgBox("Please use the m3u_plus file!", MsgBoxStyle.Critical)
                 Exit Sub
@@ -315,6 +325,9 @@ Public Class Form1
 
         Dim offset_a As Integer = TextBox_offset_a.Text
         Dim offset_b As Integer = TextBox_offset_b.Text
+
+
+        Dim TimeZoneOffset As TimeSpan = TimeSpan.FromHours(TextBox_TimeZone_offset.Text)
 
         'EPG Data
         Dim start_time As DateTime = EPG_Entries(ListBox.SelectedIndex).StartDateTime
